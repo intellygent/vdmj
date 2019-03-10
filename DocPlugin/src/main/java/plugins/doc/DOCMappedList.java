@@ -1,4 +1,4 @@
-/*******************************************************************************
+/** *****************************************************************************
  *
  *	Copyright (c) 2016 Fujitsu Services Ltd.
  *
@@ -19,48 +19,67 @@
  *	You should have received a copy of the GNU General Public License
  *	along with VDMJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- ******************************************************************************/
-
+ *****************************************************************************
+ */
 package plugins.doc;
 
 import java.util.List;
 
 import com.fujitsu.vdmj.mapper.MappedList;
+import java.util.ArrayList;
 
-abstract public class DOCMappedList<FROM, TO> extends MappedList<FROM, TO>
-{
-	private static final long serialVersionUID = 1L;
+abstract public class DOCMappedList<FROM, TO> extends MappedList<FROM, TO> {
 
-	public DOCMappedList(List<FROM> from) throws Exception
-	{
-		super(DOCNode.MAPPINGS, from);
-	}
-	
-	public DOCMappedList()
-	{
-		super();
-	}
-	
-	@Override
-	public boolean equals(Object other)
-	{
-		if (other instanceof DOCMappedList)
-		{
-			return super.equals(other);
-		}
-		
-		return false;
-	}
-	
-	// Set the extent (width and height) of a mappped list.
-	public abstract void extent(int maxWidth);
+    private static final long serialVersionUID = 1L;
 
-	// Generate the HTML format of a mapped list.
-	public abstract String toHTML(int indent);
+    public DOCMappedList(List<FROM> from) throws Exception {
+        super(DOCNode.MAPPINGS, from);
+    }
 
-	// Generate HTML format of a mapped list when its width is not significant.
-	public String toHTML()
-	{
-		return toHTML(0);
-	}
+    public DOCMappedList() {
+        super();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof DOCMappedList) {
+            return super.equals(other);
+        }
+
+        return false;
+    }
+
+    // Set the extent (width and height) of a mappped list.
+    public abstract void extent(int maxWidth);
+
+    // Generate the HTML format of a mapped list.
+    public abstract String toHTML(int indent);
+
+    // Generate HTML format of a mapped list when its width is not significant.
+    public String toHTML() {
+        return toHTML(0);
+    }
+
+    // Create a list of nodes from the mapped list target.
+    public List<DOCNode> to() {
+        List<DOCNode> result = new ArrayList();
+        for (TO t : this) {
+            result.add((DOCNode) t);
+        }
+        return result;
+    }
+
+    // Create a list of nodes from the nested mapped list target.
+    public List<DOCMappedList> toList() {
+        List<DOCMappedList> result = new ArrayList();
+        for (TO t : this) {
+            result.add((DOCMappedList) t);
+        }
+        return result;
+    }
+
+    // Is the list primitive; subclass specific.
+    public boolean isPrimitive() {
+        return false;
+    }
 }
