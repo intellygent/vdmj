@@ -1,4 +1,4 @@
-/*******************************************************************************
+/** *****************************************************************************
  *
  *	Copyright (c) 2019 Paul Chisholm
  *
@@ -19,36 +19,41 @@
  *	You should have received a copy of the GNU General Public License
  *	along with VDMJ.  If not, see <http://www.gnu.org/licenses/>.
  *
- ******************************************************************************/
- 
+ *****************************************************************************
+ */
 package plugins.doc.lex;
-
-import plugins.doc.lex.DOCToken;
 
 import com.fujitsu.vdmj.lex.LexLocation;
 import com.fujitsu.vdmj.tc.lex.TCNameToken;
 
-public class DOCNameToken extends DOCToken
-{
-	private static final long serialVersionUID = 1L;
-	private final TCNameToken token;
-	public final LexLocation location;
+public class DOCNameToken extends DOCToken {
 
-	public DOCNameToken(TCNameToken token)
-	{
-		this.token = token;
-		this.location = token.getLocation();
-	}
+    private static final long serialVersionUID = 1L;
+    private final TCNameToken token;
+    public final LexLocation location;
 
-	@Override
-	public void extent(int maxWidth)
-	{
-		return;
-	}
-	
-	@Override
-	public String toHTML(int indent)
-	{
-		return null;
-	}
+    public DOCNameToken(TCNameToken token) {
+        this.token = token;
+        this.location = token.getLocation();
+    }
+
+    public String getName() // Simple name, never explicit
+    {
+        return token.getName();
+    }
+
+    public String getModule() // Module name
+    {
+        return token.getModule();
+    }
+
+    @Override
+    public void extent(int maxWidth) {
+        return;
+    }
+
+    @Override
+    public String toHTML(int indent) {
+        return null;
+    }
 }

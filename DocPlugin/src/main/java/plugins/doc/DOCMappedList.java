@@ -31,6 +31,7 @@ import java.util.ArrayList;
 abstract public class DOCMappedList<FROM, TO> extends MappedList<FROM, TO> {
 
     private static final long serialVersionUID = 1L;
+    public Extent extent; // Extent of the content when formatted.
 
     public DOCMappedList(List<FROM> from) throws Exception {
         super(DOCNode.MAPPINGS, from);
